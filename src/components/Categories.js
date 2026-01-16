@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 const Categories = () => {
   const categories = [
@@ -21,13 +21,22 @@ const Categories = () => {
   const [startIndex, setStartIndex] = useState(0);
   const [visibleItems, setVisibleItems] = useState(7);
 
+  // useCallback to prevent re-creation and fix ESLint
+  const showNext = useCallback(() => {
+    setStartIndex((prevIndex) => (prevIndex + 1) % categories.length);
+  }, [categories.length]);
+
+  const showPrevious = useCallback(() => {
+    setStartIndex((prevIndex) => (prevIndex - 1 + categories.length) % categories.length);
+  }, [categories.length]);
+
   useEffect(() => {
     const updateVisibleItems = () => {
       const width = window.innerWidth;
       if (width > 1200) setVisibleItems(7);
       else if (width > 992) setVisibleItems(5);
       else if (width > 768) setVisibleItems(3);
-      else setVisibleItems(2); // Mobile par kam se kam 2 dikhayenge
+      else setVisibleItems(2);
     };
 
     updateVisibleItems();
@@ -35,20 +44,13 @@ const Categories = () => {
     return () => window.removeEventListener("resize", updateVisibleItems);
   }, []);
 
-  const showNext = () => {
-    setStartIndex((prevIndex) => (prevIndex + 1) % categories.length);
-  };
-
-  const showPrevious = () => {
-    setStartIndex((prevIndex) => (prevIndex - 1 + categories.length) % categories.length);
-  };
-
+  // Auto-slide logic
   useEffect(() => {
     const interval = setInterval(() => {
       showNext();
     }, 3000);
     return () => clearInterval(interval);
-  }, [startIndex]); // startIndex dependency zaroori hai automatic smooth rotation ke liye
+  }, [showNext]); // showNext is now a stable dependency
 
   const visibleCategories = categories
     .slice(startIndex, startIndex + visibleItems)
@@ -61,7 +63,6 @@ const Categories = () => {
       <h2 className="text-3xl font-bold mb-8 text-gray-800 tracking-tight">Category</h2>
       
       <div className="relative flex items-center justify-center group">
-        {/* Left Arrow */}
         <button 
           onClick={showPrevious} 
           className="absolute left-0 md:left-4 z-10 bg-teal-500 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:bg-teal-600 transition-all opacity-0 group-hover:opacity-100 hidden md:flex"
@@ -69,7 +70,6 @@ const Categories = () => {
           &lt;
         </button>
 
-        {/* Categories Container */}
         <div className="flex gap-4 md:gap-6 w-full max-w-7xl justify-center px-2 md:px-12 overflow-hidden">
           {visibleCategories.slice(0, visibleItems).map((category, index) => (
             <div 
@@ -90,7 +90,6 @@ const Categories = () => {
           ))}
         </div>
 
-        {/* Right Arrow */}
         <button 
           onClick={showNext} 
           className="absolute right-0 md:right-4 z-10 bg-teal-500 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:bg-teal-600 transition-all opacity-0 group-hover:opacity-100 hidden md:flex"
@@ -99,13 +98,12 @@ const Categories = () => {
         </button>
       </div>
 
-      {/* Pagination Dots */}
       <div className="flex justify-center mt-8 gap-2">
         {categories.map((_, index) => (
           <span
             key={index}
             className={`h-2 w-2 rounded-full transition-all duration-300 ${
-              startIndex % categories.length === index ? "bg-teal-500 w-4" : "bg-gray-300"
+              startIndex === index ? "bg-teal-500 w-4" : "bg-gray-300"
             }`}
           ></span>
         ))}

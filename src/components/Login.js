@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"; // Link import karein
 
 const Login = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -31,7 +32,7 @@ const Login = () => {
         </header>
 
         {/* Login Form */}
-        <form className="p-8 pt-4 space-y-5">
+        <form className="p-8 pt-4 space-y-5" onSubmit={(e) => e.preventDefault()}>
           <div className="space-y-2">
             <label className="text-sm font-bold text-gray-700 ml-1">Mobile Number</label>
             <input 
@@ -51,9 +52,10 @@ const Login = () => {
           </div>
 
           <div className="flex items-center justify-end">
-            <a href="#" className="text-sm font-semibold text-teal-600 hover:text-teal-700 hover:underline transition-colors">
+            {/* FIX 1: href="#" ko Link ya button se badla */}
+            <Link to="/forgot-password" title="Forgot Password" className="text-sm font-semibold text-teal-600 hover:text-teal-700 hover:underline transition-colors">
               Forgot Password?
-            </a>
+            </Link>
           </div>
 
           <button 
@@ -64,7 +66,11 @@ const Login = () => {
           </button>
           
           <p className="text-center text-sm text-gray-600 mt-4">
-            Don't have an account? <a href="/register" className="text-teal-600 font-bold hover:underline">Register</a>
+            Don't have an account? 
+            {/* FIX 2: anchor tag ki jagah Link use kiya */}
+            <Link to="/register" className="ml-1 text-teal-600 font-bold hover:underline">
+              Register
+            </Link>
           </p>
         </form>
       </div>

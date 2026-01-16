@@ -14,7 +14,7 @@ const Footer = () => {
     <img 
       src='/images/newlogo23.jpg' 
       className="w-full h-auto object-contain rounded-lg shadow-sm" 
-      alt="Alpha Platinum Logo" 
+      alt="SK Prime Mart Logo" 
       loading="lazy"
     />
   </div>
@@ -66,7 +66,7 @@ const Footer = () => {
       {/* Bottom Footer */}
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-6">
         <p className="text-gray-500 text-xs text-center">
-          Copyright © 2024, All Rights Reserved Alpha Platinum Private Limited
+          Copyright © 2024, All Rights Reserved SK Prime Group Private Limited
         </p>
         <div className="flex flex-wrap justify-center gap-4 md:gap-8">
           <Link to="/" className="text-gray-500 hover:text-white text-xs transition-colors">Home</Link>
