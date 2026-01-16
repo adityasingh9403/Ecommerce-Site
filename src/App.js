@@ -1,6 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Header from './components/Header';
 import Slider from './components/Slider';
 import Categories from './components/Categories';
@@ -21,7 +20,6 @@ import Terms from './components/Terms';
 import Privacy from './components/Privacy';
 import About from './components/About';
 import Seller from './components/Seller';
-import './App.css';
 import Category from './components/Category';
 import Contact from './components/Contact';
 import ProductLists from './components/ProductLists';
@@ -29,35 +27,60 @@ import ProductDetail from './pages/ProductDetail';
 import NewProductSpecial from './components/NewProductSpecial';
 import Login from './components/Login';
 import Register from './components/Register';
+import ScrollToTop from './components/ScrollToTop';
+
 function App() {
   return (
     <Router>
-      <div className="App">
+      <ScrollToTop />
+      <div className="App bg-white min-h-screen">
         <Header />
+        
         <Routes>
+          {/* Main Home Page Route */}
           <Route path="/" element={
-            <>
+            <main className="flex flex-col overflow-hidden">
               <Slider />
               <Categories />
-              <hr />
-              <p className="newproduct"><b>New Product</b></p>
-              <p className="newproduct1">special</p>
-              <Link to="/newproductspecial" className="footer-link"><button className="footerlink">View More</button></Link>
-              <hr />
-              <ProductList />
-              <hr></hr>
-              <Dress />
+              
+              <div className="max-w-7xl mx-auto w-full px-4 md:px-8 py-10">
+                {/* Section Header: New Product */}
+                <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4 border-b border-gray-100 pb-6">
+                  <div>
+                    <h2 className="text-3xl font-black text-gray-800 uppercase tracking-tight">New Product</h2>
+                    <p className="text-teal-600 font-bold uppercase text-sm tracking-widest">Special Collection</p>
+                  </div>
+                  <Link to="/newproductspecial">
+                    <button className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2.5 px-8 rounded-full transition-all shadow-md active:scale-95">
+                      View More
+                    </button>
+                  </Link>
+                </div>
+                
+                <ProductList />
+                
+                <div className="my-16">
+                  <Dress />
+                </div>
 
-              <hr />
-              <p className="newproduct"><b>New One</b></p>
-              <p className="newproduct1">Special Offer</p>
-              <hr />
-              <Sheets />
+                {/* Section Header: Special Offer */}
+                <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4 border-b border-gray-100 pb-6">
+                  <div>
+                    <h2 className="text-3xl font-black text-gray-800 uppercase tracking-tight">New One</h2>
+                    <p className="text-teal-600 font-bold uppercase text-sm tracking-widest">Limited Special Offer</p>
+                  </div>
+                </div>
+
+                <Sheets />
+              </div>
+
               <Download />
               <Features />
               <Footer />
-            </>
+            </main>
           } />
+
+          {/* Other Routes */}
           <Route path="/clothing" element={<Clothing />} />
           <Route path="/electronics" element={<Electronics />} />
           <Route path="/home" element={<Home />} />

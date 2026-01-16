@@ -1,5 +1,4 @@
 import React from 'react';
-import './ByDefault.css';
 import Footer from './Footer';
 
 const categories = [
@@ -18,32 +17,71 @@ const categories = [
 
 const Grocery = () => {
   return (
-
-    <div className='terms-container'>
-      <div className='terms-header'>
-        <div className='terms-title'>
-          <p className='title-text'><b>Grocery & Gourmet Food</b></p>
+    <div className="w-full bg-gray-50 min-h-screen font-sans">
+      {/* Header Section */}
+      <div className="bg-[#14949d]/30 flex flex-col md:flex-row justify-between items-center px-6 md:px-20 py-10 gap-4 border-b border-gray-200">
+        <div className="text-center md:text-left">
+          <p className="text-gray-800 text-lg md:text-2xl font-bold tracking-wider uppercase">
+            Grocery & Gourmet Food
+          </p>
         </div>
-        <div className='breadcrumbs'>
-          <p className='breadcrumb-text'>Home / Category / <b>Grocery & Gourmet Food</b></p>
+        <div className="text-gray-600 text-sm md:text-base italic">
+          <p>
+            Home / Category / <span className="font-bold text-teal-600">Grocery</span>
+          </p>
         </div>
       </div>
 
-      <div className="sheets-grid">
-        {categories.map((category, index) => (
-          <div key={index} className="sheets-item">
-            <div className="discount-badge">0% OFF</div>
-            <img src={category.image} alt={category.name} className="sheets-image" />
-            <p className="sheets-name">{category.name}</p>
-            <p className="sheets-price"><del>{category.price}</del></p>
-            <p className="sheets-price">{category.price}</p>
-            <button className="add-to-cart-button">+ Add to Cart</button>
-          </div>
-        ))}
+      {/* Product Grid Container */}
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+          {categories.map((category, index) => (
+            <div 
+              key={index} 
+              className="group relative bg-white border border-gray-100 rounded-xl p-3 md:p-4 flex flex-col shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+            >
+              {/* Discount Badge */}
+              <div className="absolute top-2 left-2 bg-teal-500 text-white text-[10px] md:text-xs font-bold px-2 py-1 rounded-md z-10 shadow-sm">
+                0% OFF
+              </div>
+
+              {/* Product Image */}
+              <div className="h-32 md:h-44 w-full mb-4 overflow-hidden rounded-lg flex items-center justify-center bg-gray-50">
+                <img 
+                  src={category.image} 
+                  alt={category.name} 
+                  className="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-300" 
+                />
+              </div>
+
+              {/* Product Details */}
+              <div className="flex flex-col flex-grow">
+                <h3 className="text-sm md:text-base font-bold text-gray-800 mb-1 line-clamp-1">
+                  {category.name}
+                </h3>
+                
+                {/* Pricing */}
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-teal-600 font-extrabold text-sm md:text-lg">
+                    {category.price}
+                  </span>
+                  <del className="text-gray-400 text-[10px] md:text-xs">
+                    {category.actualprice}
+                  </del>
+                </div>
+
+                {/* Add to Cart Button */}
+                <button className="mt-auto w-full bg-teal-500 hover:bg-teal-600 text-white text-xs md:text-sm font-bold py-2 rounded-lg transition-colors shadow-sm active:scale-95">
+                  + Add to Cart
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
+
       <Footer />
     </div>
-
   );
 };
 

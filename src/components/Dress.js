@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './ByDefault.css';
 
 const categories = [
   { name: 'Clothing', price: '₹5248.', image: '/images/img16.jpg' },
@@ -12,22 +11,55 @@ const categories = [
 
 const Dress = () => {
   return (
-    <section className="sheets-section">
-      <div className="sheets-grid">
+    <section className="py-10 px-4 md:px-10 bg-white">
+      {/* Product Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-stretch">
+        
         {categories.map((category, index) => (
-          <div key={index} className="sheets-item">
-            <div className="discount-badge">0% OFF</div>
-            <img src={category.image} alt={category.name} className="sheets-image" />
-            <p className="sheets-name">{category.name}</p>
-            <p className="sheets-price">{category.price}</p>
-            <button className="add-to-cart-button">Add to Cart</button>
+          <div 
+            key={index} 
+            className="relative flex flex-col bg-white border border-gray-100 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow group"
+          >
+            {/* Discount Badge */}
+            <div className="absolute top-3 left-3 bg-teal-500 text-white text-[10px] font-bold px-2 py-1 rounded z-10">
+              0% OFF
+            </div>
+
+            {/* Product Image */}
+            <div className="h-40 w-full mb-4 overflow-hidden rounded-lg">
+              <img 
+                src={category.image} 
+                alt={category.name} 
+                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" 
+              />
+            </div>
+
+            {/* Product Info */}
+            <div className="flex flex-col flex-grow text-center">
+              <p className="text-sm font-semibold text-gray-700 mb-1 truncate">{category.name}</p>
+              <p className="text-teal-600 font-bold mb-4">{category.price}</p>
+              
+              <button className="mt-auto w-full bg-teal-500 hover:bg-teal-600 text-white text-xs font-bold py-2 rounded transition-colors">
+                Add to Cart
+              </button>
+            </div>
           </div>
         ))}
-        <div className='foot'>
-          <p className="newproduct"><b>Offer</b></p>
-          <p className="newproduct1">Special Offer</p>
-          <Link to="/newproductspecial" className="footer-link"><button className="footerlink">View More</button></Link>
+
+        {/* Special Offer Card */}
+        <div className="flex flex-col items-center justify-center bg-teal-50 border-2 border-dashed border-teal-200 rounded-xl p-6 text-center">
+          <div className="mb-2">
+            <p className="text-2xl font-black text-gray-800 leading-tight">Offer</p>
+            <p className="text-sm text-teal-600 font-medium">Special Offer</p>
+          </div>
+          
+          <Link to="/newproductspecial" className="mt-4 w-full">
+            <button className="w-full bg-white border-2 border-teal-500 text-teal-600 hover:bg-teal-500 hover:text-white font-bold py-2 rounded-lg transition-all text-sm shadow-sm">
+              View More
+            </button>
+          </Link>
         </div>
+
       </div>
     </section>
   );
